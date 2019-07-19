@@ -24,7 +24,6 @@ namespace vCast02
         public MainWindow()
         {
             InitializeComponent();
-            MessageBox.Show("Test");
         }
     }
 }
