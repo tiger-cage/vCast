@@ -31,6 +31,7 @@ namespace vCast02
     {
         static IUnityContainer _container;
 
+        private static readonly bool quit;
 
         ICasparDevice casparCGServer;
 
@@ -47,11 +48,38 @@ namespace vCast02
         static void ConfigureIOC(String server, int port = 5250)
         {
             _container = new UnityContainer();
+
             _container.RegisterInstance<IServerConnection>(new ServerConnection(new CasparCGConnectionSettings(server, port)));
             _container.RegisterType(typeof(IAMCPTcpParser), typeof(AmcpTCPParser));
             _container.RegisterSingleton<IDataParser, CasparCGDatasParser>();
             _container.RegisterType(typeof(IAMCPProtocolParser), typeof(AMCPProtocolParser));
             _container.RegisterType<ICasparDevice, CasparDevice>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IOscListener, OscListener>(); //OSC
+        }
+
+        private void OscStop()
+        {
+            var oscListener = _container.Resolve<OscListener>();
+            oscListener.StopListening();
+
+
+        }
+
+        private void OscStart()
+        {
+            var oscListener = _container.Resolve<IOscListener>();
+            //oscListener.RegisterMethod("/channel/1/stage/layer/1/file/time");
+            oscListener.AddToAddressBlackList("/channel/[0-9]/output/consume_time");
+            oscListener.AddToAddressBlackList("/channel/1/stage/layer/1/profiler/time");
+
+            oscListener.OscMessageReceived += OscListener_OscMessageReceived;
+            oscListener.StartListening("127.0.0.1", 6250);
+            //Console.WriteLine("Osc listener strarted");
+        }
+
+        public void OscListener_OscMessageReceived(object sender, OscMessageEventArgs e)
+        {
+            lstbxOSC.Items.Add(e.OscPacket.ToString());
         }
 
         private void BtnConnect_Click(object sender, RoutedEventArgs e)
@@ -181,5 +209,20 @@ namespace vCast02
             casparCGServer.Channels.FirstOrDefault()?.Remove(700);
         }
 
+        private void BtnOSC_Click(object sender, RoutedEventArgs e)
+        {
+            OscStart();
+
+            //if (btnOSC.Content.ToString() == "Stop OSC")
+            //{
+            //    OscStart();
+            //    btnOSC.Content = "Stop OSC";
+            //}
+            //else
+            //{
+            //    OscStop();
+            //    btnOSC.Content = "OSC Start";
+            //}
+        }
     }
 }

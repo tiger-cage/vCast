@@ -17,9 +17,11 @@
                     <TextBox x:Name="inputCasPort" HorizontalAlignment="Left" Height="27" Margin="186,10,0,0" TextWrapping="Wrap" Text="5250" VerticalAlignment="Top" Width="86"/>
                     <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Width="78" Height="27" Click="BtnConnect_Click"/>
                     <Label x:Name="lblConnectStatus" Content="Not Connected." HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Width="262" Foreground="Red"/>
-                    <TextBox x:Name="inptCmd" HorizontalAlignment="Left" Height="29" Margin="10,73,0,0" TextWrapping="Wrap" Text="INFO" VerticalAlignment="Top" Width="163" FontSize="18"/>
+                    <TextBox x:Name="inptCmd" HorizontalAlignment="Left" Height="29" Margin="10,73,0,0" TextWrapping="Wrap" Text="PLAY" VerticalAlignment="Top" Width="163" FontSize="18"/>
                     <Button x:Name="btnSendCommand" Content="Send Command" HorizontalAlignment="Left" Margin="186,73,0,0" VerticalAlignment="Top" Width="125" Height="29" FontSize="14" Click="BtnSendCommand_Click"/>
                     <ListBox x:Name="lstBoxFiles" HorizontalAlignment="Left" Height="299" Margin="21,123,0,0" VerticalAlignment="Top" Width="290"/>
+                    <Button x:Name="btnOSC" Content="OSC Start" HorizontalAlignment="Left" Margin="458,9,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="BtnOSC_Click"/>
+                    <ListBox x:Name="lstbxOSC" HorizontalAlignment="Left" Height="276" Margin="403,128,0,0" VerticalAlignment="Top" Width="269"/>
                 </Grid>
             </TabItem>
             <TabItem Header="TabItem">
